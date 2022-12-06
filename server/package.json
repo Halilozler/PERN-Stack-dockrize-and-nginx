@@ -8,7 +8,8 @@
     "build": "esbuild --bundle src/index.js --outfile=build/app.js --minify --platform=node",
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "pm2 start ./src/index.js",
-    "start.dev": "./node_modules/.bin/nodemon src/index.js"
+    "start.dev": "./node_modules/.bin/nodemon src/index.js",
+    "start.nor": "node src/index.js"
   },
   "author": "",
   "license": "ISC",
