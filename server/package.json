@@ -1,0 +1,24 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build2": "terser ./src/index.js",
+    "build": "esbuild --bundle src/index.js --outfile=build/app.js --minify --platform=node",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "pm2 start ./src/index.js",
+    "start.dev": "./node_modules/.bin/nodemon src/index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.20.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "esbuild": "^0.15.18",
+    "express": "^4.18.2",
+    "morgan": "^1.10.0",
+    "pg": "^8.8.0"
+  }
+}

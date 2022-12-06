@@ -1,0 +1,62 @@
+# docker-compose -f "docker-compose.dev.yml" up
+
+# eğer react tarafında değişiklikleri otomatik algılanıp direk olarak yansıması istenirse:(windows'da bu hata olmakdadır.)
+# app -> package.json -> "scripts": { "start": "WATCHPACK_POLLING=true react-scripts start" } "start" ile değiştirilmeli(bu projede yapılmıştır)
+
+version: "3.8"
+
+services:
+  db-app:
+    image: postgres
+    restart: always
+    environment: 
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=postgres
+    logging:
+      options:
+        max-size: 10m
+        max-file: "3"
+    networks: 
+      - mynetwork
+    ports:
+      - 5432:5432
+    volumes:
+      - ./postgre/postgres-data:/var/lib/postgresql/data
+      - ./postgre/create_tables.sql:/docker-entrypoint-initdb.d/create_tables.sql
+  server-app:
+    restart: always
+    build:
+      context: ./server
+      target: server-development
+    container_name: server-dev
+    image: server-dev
+    volumes:
+      - ./server/src:/app/server/src
+      - ./server/.env:/app/server/.env
+    ports:
+      - 8000:8000
+    networks: 
+      - mynetwork
+    depends_on:
+      - db-app
+  web-app:
+    restart: always
+    container_name: web-app-dev
+    image: web-app-dev
+    build: 
+      context: ./app
+      target: app-development
+    volumes:
+      - ./app/src:/app/front/src
+    ports:
+      - 3000:3000
+    networks: 
+      - mynetwork
+    depends_on:
+      - db-app
+      - server-app
+
+networks:
+  mynetwork:
+    driver: bridge

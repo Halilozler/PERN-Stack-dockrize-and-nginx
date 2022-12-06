@@ -1,0 +1,5 @@
+/postgre/postgres-data
+/nginx/build
+
+/app/node_modules
+/server/node_modules
