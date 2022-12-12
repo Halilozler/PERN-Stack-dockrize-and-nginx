@@ -18,7 +18,7 @@ const initialize = async() => {
                     console.log("database connect");
                     console.log(`Example app listening at http://localhost:${port}`);
                     clearInterval(interval);
-                }).catch((err) => { throw new Error(err) })
+                });
             })
         } catch (err) {
             dbconnect++;
